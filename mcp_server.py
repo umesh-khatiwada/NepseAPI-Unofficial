@@ -1344,7 +1344,8 @@ async def health_check(request: Request) -> PlainTextResponse:
 
 # Update the transport to 'stdio' for local testing, 'http' for production / remote
 if __name__ == "__main__":
-    # for local testing
-    # mcp.run(transport="stdio")
-    # for production / remote
-    mcp.run(transport="http", host="0.0.0.0", port=PORT)
+    import sys
+    if "--stdio" in sys.argv:
+        mcp.run(transport="stdio")
+    else:
+        mcp.run(transport="http", host="0.0.0.0", port=PORT)

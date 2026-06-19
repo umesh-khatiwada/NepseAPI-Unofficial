@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, Response, Request
 from fastapi.responses import JSONResponse
+# pyrefly: ignore [missing-import]
 from nepse import AsyncNepse
 import logging
 import time

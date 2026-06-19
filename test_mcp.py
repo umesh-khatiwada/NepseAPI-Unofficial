@@ -14,13 +14,13 @@ MCP_SERVER_URL = "http://0.0.0.0:9000/mcp"
 MCP_TOOLS = [
     {"name": "get_market_summary", "args": {}},
     {"name": "get_live_market", "args": {}},
-    {"name": "get_company_details", "args": {"symbol": "NABIL"}},
+    {"name": "get_company_name_from_symbol", "args": {"symbol": "NABIL"}},
     {"name": "get_price_volume", "args": {}},
     {"name": "get_top_gainers", "args": {}},
     {"name": "get_top_losers", "args": {}},
     {"name": "get_nepse_index", "args": {}},
-    {"name": "get_sector_indices", "args": {}},
-    {"name": "check_market_status", "args": {}},
+    {"name": "get_nepse_subindex", "args": {}},
+    {"name": "get_market_status", "args": {}},
     {"name": "get_company_list", "args": {}},
     {"name": "get_floorsheet", "args": {}},
     {"name": "get_company_floorsheet", "args": {"symbol": "NABIL"}},
@@ -28,9 +28,8 @@ MCP_TOOLS = [
     {"name": "get_market_depth", "args": {"symbol": "NABIL"}},
     {"name": "get_supply_demand", "args": {}},
     {"name": "get_top_turnover", "args": {}},
-    {"name": "get_comprehensive_market_data", "args": {}},
     {"name": "validate_stock_symbol_tool", "args": {"symbol": "NABIL"}},
-    {"name": "get_validation_stats", "args": {}},
+    {"name": "get_company_symbol", "args": {"company_name": "Nabil"}},
 ]
 
 
@@ -66,6 +65,7 @@ async def test_mcp_server():
             print(f"\nTest {i}/{total_tests}: {tool['name']}")
             print("-" * 40)
             try:
+                await asyncio.sleep(1.1)
                 result = await client.call_tool(tool['name'], tool['args'])
                 print(f"✓ SUCCESS: Tool '{tool['name']}' executed successfully")
                 if isinstance(result, list):
@@ -99,7 +99,7 @@ async def test_tool_listing():
             tools = await client.list_tools()
             print(f"Available tools: {len(tools)}")
             for tool in tools:
-                print(f"  • {tool.get('name')}: {tool.get('description')}")
+                print(f"  • {tool.name}: {tool.description}")
         except Exception as e:
             print(f"Failed to list tools: {e}")
 
